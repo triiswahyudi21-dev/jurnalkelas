@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal & Laporan Wali Kelas</title>
+    <title>SMPN 3 BESUKI - Jurnal & Laporan Wali Kelas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -23,6 +23,7 @@
 
     <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-red-950 px-4">
         <div class="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl max-w-lg w-full text-center border border-white/20">
+            <div class="text-amber-500 font-black text-lg tracking-widest uppercase mb-1">SMPN 3 BESUKI</div>
             <h1 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase leading-tight">
                 Jurnal dan Laporan Harian<br>Serta Bulanan Wali Kelas
             </h1>
@@ -96,7 +97,7 @@
                         <i id="navAvatarIcon" class="fas fa-user-tie text-xl text-slate-400"></i>
                     </div>
                     <div>
-                        <h1 class="text-base font-black tracking-wide uppercase">Jurnal Kelas</h1>
+                        <h1 class="text-base font-black tracking-wide uppercase">SMPN 3 BESUKI</h1>
                         <p class="text-xs text-slate-300">Sistem Laporan Realtime Wali Kelas</p>
                     </div>
                 </div>
@@ -132,6 +133,7 @@
                 </div>
                 
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-center text-xs text-slate-600 font-medium space-y-1">
+                    <div><span class="w-24 inline-block font-bold">Sekolah</span>: <span class="text-amber-700 font-bold">SMPN 3 BESUKI</span></div>
                     <div><span class="w-24 inline-block font-bold">Wali Kelas</span>: <span id="metaInfoWali" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-24 inline-block font-bold">Tempat/Kota</span>: <span id="metaInfoTempat" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-24 inline-block font-bold">Kelas Aktif</span>: <span id="metaInfoKelas" class="text-slate-900 font-semibold"></span></div>
@@ -157,10 +159,11 @@
                             </div>
                         </div>
                         <div class="bg-amber-50/50 p-3 rounded-lg border-2 border-amber-200">
-                            <h3 class="text-xs font-bold text-amber-900 uppercase mb-2"><i class="far fa-calendar-alt"></i> Tanggal Cetak/Kirim Laporan</h3>
+                            <h3 class="text-xs font-bold text-amber-900 uppercase mb-2"><i class="far fa-calendar-alt"></i> Tanggal Ttd Laporan Bulanan</h3>
                             <div>
-                                <label class="block text-[11px] font-semibold mb-0.5 text-slate-600">Tempat, Tgl Bulan Tahun</label>
-                                <input type="text" id="inTglCetakBulanan" class="w-full p-1.5 border rounded text-xs font-bold text-slate-800 placeholder-slate-400" placeholder="Contoh: Jakarta, 31 Juli 2026">
+                                <label class="block text-[11px] font-semibold mb-0.5 text-slate-600">Hanya Ketik Tanggal Saja</label>
+                                <input type="text" id="inTglCetakBulanan" class="w-full p-1.5 border rounded text-xs font-bold text-slate-800 placeholder-slate-400" placeholder="Contoh: 31">
+                                <p class="text-[10px] text-slate-400 mt-1">*Tempat & Bulan otomatis digabung di surat</p>
                             </div>
                         </div>
                     </div>
@@ -203,11 +206,11 @@
                             <select id="logSiswaSelect" class="w-full p-2 bg-white border text-xs rounded-lg outline-none font-medium text-slate-800" required></select>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Hari</label>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Hari Kejadian</label>
                             <select id="logHari" class="w-full p-2 bg-white border text-xs rounded-lg outline-none"><option value="Senin">Senin</option><option value="Selasa">Selasa</option><option value="Rabu">Rabu</option><option value="Kamis">Kamis</option><option value="Jumat">Jumat</option><option value="Sabtu">Sabtu</option></select>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal</label>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal Kejadian (Angka)</label>
                             <input type="number" id="logTanggal" min="1" max="31" class="w-full p-1.5 bg-white border text-xs rounded-lg text-center font-bold" required value="1">
                         </div>
                         <div class="md:col-span-1">
@@ -250,6 +253,7 @@
                 
                 <div class="hidden print:flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-6">
                     <div class="text-left">
+                        <div class="text-base font-black tracking-widest text-slate-900 uppercase">SMPN 3 BESUKI</div>
                         <h2 class="text-xl font-bold uppercase">LAPORAN REKAP BULANAN DATA KELAS</h2>
                         <div class="grid grid-cols-2 text-xs mt-2 gap-x-6 gap-y-1">
                             <div><strong>Wali Kelas</strong>: <span id="lblWali">-</span></div>
@@ -423,13 +427,6 @@
             return index !== -1 ? (index + 1) : "-";
         }
 
-        function formatTanggalSekarang() {
-            let d = new Date();
-            let bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            let kota = currentTempat || "Indonesia";
-            return `${kota}, ${d.getDate()} ${bulanIndo[d.getMonth()]} ${d.getFullYear()}`;
-        }
-
         function loadAndRender() {
             let masterKey = getSafeKey('master_siswa');
             let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
@@ -458,7 +455,7 @@
                     selectSiswa.appendChild(opt);
 
                     let d = catatanBulan[siswa.id] || {
-                        h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: ''
+                        h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: '31'
                     };
 
                     let pelanggaranOtomatis = generateKompilasiPelanggaran(siswa.id);
@@ -620,7 +617,7 @@
 
             let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
             let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
-            let d = catatanBulan[id] || { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: '' };
+            let d = catatanBulan[id] || { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: '31' };
 
             document.getElementById('inH').value = d.h;
             document.getElementById('inA').value = d.a;
@@ -634,10 +631,7 @@
             document.getElementById('inPrestasi').value = generateKompilasiPelanggaran(id);
             document.getElementById('inDesc').value = d.desc;
             document.getElementById('inUpgrade').value = d.upgrade;
-
-            // Load atau set default nilai kota tempat dan tanggal di form input bulanan
-            let defaultKotaTgl = d.tglCetak || ( (currentTempat || "Indonesia") + ", " + "31 " + currentBulan + " 2026" );
-            document.getElementById('inTglCetakBulanan').value = defaultKotaTgl;
+            document.getElementById('inTglCetakBulanan').value = d.tglCetak || '31';
 
             document.getElementById('formContainer').scrollIntoView({behavior: 'smooth'});
         }
@@ -659,7 +653,7 @@
                 sikap: document.getElementById('inSikap').value,
                 desc: document.getElementById('inDesc').value || '-',
                 upgrade: document.getElementById('inUpgrade').value || '-',
-                tglCetak: document.getElementById('inTglCetakBulanan').value || '-'
+                tglCetak: document.getElementById('inTglCetakBulanan').value || '31'
             };
 
             localStorage.setItem(bulkDataKey, JSON.stringify(catatanBulan));
@@ -697,13 +691,14 @@
             let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
 
             let siswa = daftarSiswa.find(s => s.id === id);
-            let d = catatanBulan[id] || { h:20, a:0, i:0, s:0, akademik:'Baik', disiplin:'Baik', aktif:'Baik', sikap:'Baik', desc: '-', upgrade: '-', tglCetak: '' };
+            let d = catatanBulan[id] || { h:20, a:0, i:0, s:0, akademik:'Baik', disiplin:'Baik', aktif:'Baik', sikap:'Baik', desc: '-', upgrade: '-', tglCetak: '31' };
             let tapel = localStorage.getItem('wk_v8_last_tapel') || "2026/2027";
+            let tahunPelajaranSaja = tapel.split('/')[0];
             let pelanggaranOtomatis = generateKompilasiPelanggaran(id);
             let nomorAbsen = getSiswaAbsenNumber(id);
             
-            // Gunakan tanggal cetak dari form input, jika kosong baru fallback otomatis
-            let tglFormat = d.tglCetak || ( (currentTempat || "Indonesia") + ", 31 " + currentBulan + " 2026" );
+            let kota = currentTempat || "Indonesia";
+            let tglFormat = `${kota}, ${d.tglCetak} ${currentBulan} ${tahunPelajaranSaja}`;
 
             let fotoHtml = imageBase64Data ? `<img src="${imageBase64Data}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:1px solid #000;">` : '';
 
@@ -711,6 +706,7 @@
                 <div style="font-family: Arial, sans-serif; padding: 35px; color: #111; background: #fff; min-height: 90vh;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 25px;">
                         <div style="text-align: left;">
+                            <div style="font-size: 11pt; font-weight: 900; tracking-wide; margin:0; text-transform: uppercase;">SMPN 3 BESUKI</div>
                             <h2 style="margin: 0; font-size: 15pt; text-transform: uppercase; font-weight: bold;">LAPORAN BULANAN PERKEMBANGAN SISWA</h2>
                             <h3 style="margin: 4px 0 0 0; font-size: 10.5pt; font-weight: normal; color: #444;">Evaluasi Jurnal Perkembangan & Karakter Murid</h3>
                         </div>
@@ -819,6 +815,7 @@
                 <div style="font-family:Arial, sans-serif; padding:35px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">
                         <div style="text-align:left;">
+                            <div style="font-size: 11pt; font-weight: 900; tracking-wide; margin:0; text-transform: uppercase;">SMPN 3 BESUKI</div>
                             <h2 style="margin:0; font-size:14pt; text-transform: uppercase; font-weight:bold;">LAPORAN REKAP HARIAN PELANGGARAN KELAS</h2>
                             <p style="margin:4px 0 0 0; font-size:10pt; color:#333;">Rekap Kejadian Pelanggaran Ketertiban Umum Murid</p>
                         </div>
@@ -862,12 +859,15 @@
 
             let nomorAbsen = getSiswaAbsenNumber(targetLog.siswaId);
             let fotoHtml = imageBase64Data ? `<img src="${imageBase64Data}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:1px solid #000;">` : '';
-            let tglFormat = formatTanggalSekarang();
+            
+            let kota = currentTempat || "Indonesia";
+            let tglFormat = `${kota}, ${targetLog.tanggal} ${targetLog.bulan} ${targetLog.tahun}`;
 
             let templateSingle = `
                 <div style="font-family:Arial, sans-serif; padding:40px; max-width:680px; margin:auto; background:#fff; line-height:1.6;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom:3px solid #b91c1c; padding-bottom:10px; margin-bottom:30px;">
                         <div style="text-align:left;">
+                            <div style="font-size: 11pt; font-weight: 900; tracking-wide; margin:0; text-transform: uppercase; color:#1e293b;">SMPN 3 BESUKI</div>
                             <h2 style="margin:0; font-size:14pt; text-transform: uppercase; font-weight:bold; color:#b91c1c; tracking-wide">SURAT PEMBERITAHUAN PELANGGARAN SISWA</h2>
                             <p style="margin:4px 0 0 0; font-size:9.5pt; color:#555;">Laporan Catatan Kasus Harian Sekolah Kepada Orang Tua / Wali Murid</p>
                         </div>
@@ -947,7 +947,7 @@
             if(daftarSiswa.length === 0) { alert('Tidak ada data siswa untuk diexport.'); return; }
 
             let sheetRows = [
-                ["JURNAL KELAS & LAPORAN PERKEMBANGAN SISWA BULANAN"],
+                ["SMPN 3 BESUKI - JURNAL KELAS & LAPORAN PERKEMBANGAN SISWA BULANAN"],
                 ["Wali Kelas:", currentWali || '-', "Kelas:", currentKelas || '-'],
                 ["Bulan Laporan:", currentBulan, "Tahun Pelajaran:", localStorage.getItem('wk_v8_last_tapel') || "2026/2027"],
                 [],
@@ -965,7 +965,7 @@
             let ws = XLSX.utils.aoa_to_sheet(sheetRows);
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Rekap Bulanan Kelas");
-            XLSX.writeFile(wb, `Jurnal_Kelas_${currentKelas || 'TanpaNama'}_${currentBulan}.xlsx`);
+            XLSX.writeFile(wb, `Jurnal_Kelas_SMPN3Besuki_${currentKelas || 'TanpaNama'}_${currentBulan}.xlsx`);
         }
     </script>
 </body>
