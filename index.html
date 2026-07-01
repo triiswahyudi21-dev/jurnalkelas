@@ -41,11 +41,20 @@
             </div>
 
             <div class="space-y-3.5 text-left">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Wali Kelas</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-chalkboard-user"></i></span>
-                        <input type="text" id="loginWali" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Masukkan nama tanpa contoh...">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Wali Kelas</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-chalkboard-user"></i></span>
+                            <input type="text" id="loginWali" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Nama wali kelas...">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempat / Kota Sekolah</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" id="loginTempat" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Contoh: Jakarta">
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -114,7 +123,7 @@
                             <i class="fas fa-trash-alt mr-0.5"></i> Kosongkan Kelas
                         </button>
                     </div>
-                    <textarea id="importArea" class="w-full p-2.5 text-xs border-2 border-slate-200 rounded-lg h-16 font-mono focus:border-indigo-500 outline-none resize-none" placeholder="Masukkan daftar nama murid baru di sini... (kosong saja, ketik satu nama per baris tanpa contoh)"></textarea>
+                    <textarea id="importArea" class="w-full p-2.5 text-xs border-2 border-slate-200 rounded-lg h-16 font-mono focus:border-indigo-500 outline-none resize-none" placeholder="Masukkan daftar nama murid baru di sini... (ketik satu nama per baris)"></textarea>
                     <div class="text-right mt-1.5">
                         <button onclick="processImport()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
                             <i class="fas fa-plus-circle mr-1"></i> Tambahkan Ke Database Kelas
@@ -124,6 +133,7 @@
                 
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-center text-xs text-slate-600 font-medium space-y-1">
                     <div><span class="w-24 inline-block font-bold">Wali Kelas</span>: <span id="metaInfoWali" class="text-slate-900 font-semibold"></span></div>
+                    <div><span class="w-24 inline-block font-bold">Tempat/Kota</span>: <span id="metaInfoTempat" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-24 inline-block font-bold">Kelas Aktif</span>: <span id="metaInfoKelas" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-24 inline-block font-bold">Bulan Laporan</span>: <span id="metaInfoBulan" class="text-indigo-700 font-extrabold uppercase"></span></div>
                 </div>
@@ -131,13 +141,13 @@
 
             <div id="formContainer" class="bg-white p-5 rounded-xl shadow-md mb-6 no-print border-2 border-indigo-500 hidden">
                 <h2 class="text-sm font-bold text-indigo-900 uppercase tracking-wider mb-3 pb-1.5 border-b flex justify-between items-center">
-                    <span><i class="fas fa-pen-square mr-1"></i> Input Nilai Laporan Bulanan: <span id="formTargetName" class="text-slate-800 underline"></span></span>
+                    <span><i class="fas fa-pen-square mr-1"></i> Input Laporan Bulanan: <span id="formTargetName" class="text-slate-800 underline"></span></span>
                     <button onclick="closeForm()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
                 </h2>
                 <form id="studentForm" class="space-y-4">
                     <input type="hidden" id="formStudentId">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-3 rounded-lg border">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 p-3 rounded-lg border md:col-span-2">
                             <h3 class="text-xs font-bold text-slate-600 uppercase mb-2">Jumlah Absensi Bulan Ini</h3>
                             <div class="grid grid-cols-4 gap-2">
                                 <div><label class="block text-[11px] text-center mb-0.5">Hadir</label><input type="number" id="inH" min="0" class="w-full p-1.5 border rounded text-center font-bold text-emerald-700"></div>
@@ -146,14 +156,21 @@
                                 <div><label class="block text-[11px] text-center mb-0.5">Sakit</label><input type="number" id="inS" min="0" class="w-full p-1.5 border rounded text-center font-bold text-blue-700"></div>
                             </div>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-lg border">
-                            <h3 class="text-xs font-bold text-slate-600 uppercase mb-2">Rekap Predikat Aspek</h3>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                <div><label class="block text-[11px] mb-0.5">Akademik</label><select id="inAkademik" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                                <div><label class="block text-[11px] mb-0.5">Disiplin</label><select id="inDisiplin" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                                <div><label class="block text-[11px] mb-0.5">Keaktifan</label><select id="inAktif" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                                <div><label class="block text-[11px] mb-0.5">Sikap</label><select id="inSikap" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                        <div class="bg-amber-50/50 p-3 rounded-lg border-2 border-amber-200">
+                            <h3 class="text-xs font-bold text-amber-900 uppercase mb-2"><i class="far fa-calendar-alt"></i> Tanggal Cetak/Kirim Laporan</h3>
+                            <div>
+                                <label class="block text-[11px] font-semibold mb-0.5 text-slate-600">Tempat, Tgl Bulan Tahun</label>
+                                <input type="text" id="inTglCetakBulanan" class="w-full p-1.5 border rounded text-xs font-bold text-slate-800 placeholder-slate-400" placeholder="Contoh: Jakarta, 31 Juli 2026">
                             </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg border">
+                        <h3 class="text-xs font-bold text-slate-600 uppercase mb-2">Rekap Predikat Aspek</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <div><label class="block text-[11px] mb-0.5">Akademik</label><select id="inAkademik" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label class="block text-[11px] mb-0.5">Disiplin</label><select id="inDisiplin" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label class="block text-[11px] mb-0.5">Keaktifan</label><select id="inAktif" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label class="block text-[11px] mb-0.5">Sikap</label><select id="inSikap" class="w-full p-1 border rounded text-xs bg-white"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -193,7 +210,11 @@
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal</label>
                             <input type="number" id="logTanggal" min="1" max="31" class="w-full p-1.5 bg-white border text-xs rounded-lg text-center font-bold" required value="1">
                         </div>
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-1">
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Tgl Kirim ke Ortu</label>
+                            <input type="text" id="logTglKirim" class="w-full p-1.5 bg-white border text-xs rounded-lg text-center font-semibold" placeholder="Contoh: 05/07/2026">
+                        </div>
+                        <div class="md:col-span-6">
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">Isi Catatan Pelanggaran Murid</label>
                             <input type="text" id="logText" class="w-full p-1.5 bg-white border text-xs rounded-lg" placeholder="Ketik pelanggaran harian disini..." required>
                         </div>
@@ -208,11 +229,12 @@
                         <thead>
                             <tr class="bg-slate-800 text-white font-bold text-center">
                                 <th class="p-2 border border-slate-700 w-16">No. Absen</th>
-                                <th class="p-2 border border-slate-700 text-left w-56">Nama Lengkap Siswa</th>
-                                <th class="p-2 border border-slate-700 w-20">Hari</th>
-                                <th class="p-2 border border-slate-700 w-16">Tanggal</th>
-                                <th class="p-2 border border-slate-700 w-20">Bulan</th>
-                                <th class="p-2 border border-slate-700 w-16">Tahun</th>
+                                <th class="p-2 border border-slate-700 text-left w-52">Nama Lengkap Siswa</th>
+                                <th class="p-2 border border-slate-700 w-16">Hari</th>
+                                <th class="p-2 border border-slate-700 w-14">Tanggal</th>
+                                <th class="p-2 border border-slate-700 w-16">Bulan</th>
+                                <th class="p-2 border border-slate-700 w-14">Tahun</th>
+                                <th class="p-2 border border-slate-700 w-28">Tanggal Dikirim ke Ortu</th>
                                 <th class="p-2 border border-slate-700 text-left">Catatan Kasus Pelanggaran Tatib</th>
                                 <th class="p-2 border border-slate-700 w-32 no-print">Aksi Laporan</th>
                             </tr>
@@ -297,6 +319,7 @@
         let currentWali = "";
         let currentKelas = "";
         let currentBulan = "Juli";
+        let currentTempat = "";
         let imageBase64Data = ""; 
 
         // LOAD CACHE UTAMA SEJAK AWAL
@@ -314,15 +337,16 @@
             }
         }
         if(localStorage.getItem('wk_v8_last_wali')) currentWali = localStorage.getItem('wk_v8_last_wali');
+        if(localStorage.getItem('wk_v8_last_tempat')) currentTempat = localStorage.getItem('wk_v8_last_tempat');
         if(localStorage.getItem('wk_v8_last_kelas')) currentKelas = localStorage.getItem('wk_v8_last_kelas');
         if(localStorage.getItem('wk_v8_last_bulan')) currentBulan = localStorage.getItem('wk_v8_last_bulan');
 
         document.getElementById('loginWali').value = currentWali;
+        document.getElementById('loginTempat').value = currentTempat;
         document.getElementById('loginKelas').value = currentKelas;
         document.getElementById('loginBulan').value = currentBulan;
         if(localStorage.getItem('wk_v8_last_tapel')) document.getElementById('loginTapel').value = localStorage.getItem('wk_v8_last_tapel');
 
-        // PROSES PERUBAHAN FOTO DI HALAMAN LOGIN DEPAN
         function previewFotoUtama(input) {
             if (input.files && input.files[0]) {
                 let reader = new FileReader();
@@ -330,7 +354,6 @@
                     imageBase64Data = e.target.result;
                     localStorage.setItem('wk_v8_foto', imageBase64Data);
                     
-                    // Update Seluruh Komponen Foto Di Halaman Manapun (Permanen)
                     document.getElementById('loginAvatar').src = imageBase64Data;
                     document.getElementById('loginAvatar').classList.remove('hidden');
                     document.getElementById('loginAvatarIcon').classList.add('hidden');
@@ -348,26 +371,26 @@
             }
         }
 
-        // TOMBOL DI LOGIN SCREEN UNTUK MASUK DASHBOARD
         function masukDashboard() {
             currentWali = document.getElementById('loginWali').value.trim();
+            currentTempat = document.getElementById('loginTempat').value.trim();
             currentKelas = document.getElementById('loginKelas').value.trim();
             currentBulan = document.getElementById('loginBulan').value;
             let currentTapel = document.getElementById('loginTapel').value.trim();
 
             localStorage.setItem('wk_v8_last_wali', currentWali);
+            localStorage.setItem('wk_v8_last_tempat', currentTempat);
             localStorage.setItem('wk_v8_last_kelas', currentKelas);
             localStorage.setItem('wk_v8_last_bulan', currentBulan);
             localStorage.setItem('wk_v8_last_tapel', currentTapel);
 
-            // Pasang Informasi Label Metadata
             document.getElementById('displayBulanNav').innerText = currentBulan;
             document.getElementById('displayTapelNav').innerText = "TP " + currentTapel;
             document.getElementById('metaInfoWali').innerText = currentWali || "-";
+            document.getElementById('metaInfoTempat').innerText = currentTempat || "-";
             document.getElementById('metaInfoKelas').innerText = currentKelas || "-";
             document.getElementById('metaInfoBulan').innerText = currentBulan;
 
-            // Alihkan Tampilan Layar Utama
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('mainDashboard').classList.remove('hidden');
 
@@ -400,7 +423,13 @@
             return index !== -1 ? (index + 1) : "-";
         }
 
-        // RENDER KESELURUHAN DATA APLIKASI
+        function formatTanggalSekarang() {
+            let d = new Date();
+            let bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            let kota = currentTempat || "Indonesia";
+            return `${kota}, ${d.getDate()} ${bulanIndo[d.getMonth()]} ${d.getFullYear()}`;
+        }
+
         function loadAndRender() {
             let masterKey = getSafeKey('master_siswa');
             let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
@@ -410,7 +439,7 @@
             let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
             let logPelanggaran = JSON.parse(localStorage.getItem(logPelanggaranKey)) || [];
 
-            // 1. Render Tabel Rekap Bulanan (Bawah)
+            // 1. Render Tabel Rekap Bulanan
             const tbody = document.getElementById('tableDataBody');
             tbody.innerHTML = '';
             
@@ -429,7 +458,7 @@
                     selectSiswa.appendChild(opt);
 
                     let d = catatanBulan[siswa.id] || {
-                        h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-'
+                        h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: ''
                     };
 
                     let pelanggaranOtomatis = generateKompilasiPelanggaran(siswa.id);
@@ -466,7 +495,7 @@
                 });
             }
 
-            // 2. Render Tabel Log Kejadian Pelanggaran Harian (Atas)
+            // 2. Render Tabel Log Kejadian Pelanggaran Harian
             const logTbody = document.getElementById('tableLogBody');
             logTbody.innerHTML = '';
             
@@ -485,6 +514,7 @@
                         <td class="p-2 border text-center font-bold">${log.tanggal}</td>
                         <td class="p-2 border text-center font-semibold">${log.bulan}</td>
                         <td class="p-2 border text-center">${log.tahun}</td>
+                        <td class="p-2 border text-center font-medium text-slate-600">${log.tglKirim || '-'}</td>
                         <td class="p-2 border text-red-800 font-medium text-left">${log.catatan}</td>
                         <td class="p-2 border text-center no-print flex justify-center items-center gap-1.5">
                             <button onclick="printLaporanPelanggaranPerSiswa('${log.id}')" class="px-2 py-0.5 bg-red-50 text-red-700 font-bold rounded border border-red-200 text-[10px]">
@@ -563,11 +593,13 @@
                 tanggal: parseInt(document.getElementById('logTanggal').value),
                 bulan: currentBulan,
                 tahun: tahunPelajaranSaja,
+                tglKirim: document.getElementById('logTglKirim').value || '-',
                 catatan: document.getElementById('logText').value
             });
 
             localStorage.setItem(logPelanggaranKey, JSON.stringify(logPelanggaran));
             document.getElementById('logText').value = '';
+            document.getElementById('logTglKirim').value = '';
             loadAndRender();
         });
 
@@ -588,7 +620,7 @@
 
             let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
             let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
-            let d = catatanBulan[id] || { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-' };
+            let d = catatanBulan[id] || { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '-', upgrade: '-', tglCetak: '' };
 
             document.getElementById('inH').value = d.h;
             document.getElementById('inA').value = d.a;
@@ -602,6 +634,10 @@
             document.getElementById('inPrestasi').value = generateKompilasiPelanggaran(id);
             document.getElementById('inDesc').value = d.desc;
             document.getElementById('inUpgrade').value = d.upgrade;
+
+            // Load atau set default nilai kota tempat dan tanggal di form input bulanan
+            let defaultKotaTgl = d.tglCetak || ( (currentTempat || "Indonesia") + ", " + "31 " + currentBulan + " 2026" );
+            document.getElementById('inTglCetakBulanan').value = defaultKotaTgl;
 
             document.getElementById('formContainer').scrollIntoView({behavior: 'smooth'});
         }
@@ -622,7 +658,8 @@
                 aktif: document.getElementById('inAktif').value,
                 sikap: document.getElementById('inSikap').value,
                 desc: document.getElementById('inDesc').value || '-',
-                upgrade: document.getElementById('inUpgrade').value || '-'
+                upgrade: document.getElementById('inUpgrade').value || '-',
+                tglCetak: document.getElementById('inTglCetakBulanan').value || '-'
             };
 
             localStorage.setItem(bulkDataKey, JSON.stringify(catatanBulan));
@@ -660,10 +697,13 @@
             let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
 
             let siswa = daftarSiswa.find(s => s.id === id);
-            let d = catatanBulan[id] || { h:20, a:0, i:0, s:0, akademik:'Baik', disiplin:'Baik', aktif:'Baik', sikap:'Baik', desc: '-', upgrade: '-' };
+            let d = catatanBulan[id] || { h:20, a:0, i:0, s:0, akademik:'Baik', disiplin:'Baik', aktif:'Baik', sikap:'Baik', desc: '-', upgrade: '-', tglCetak: '' };
             let tapel = localStorage.getItem('wk_v8_last_tapel') || "2026/2027";
             let pelanggaranOtomatis = generateKompilasiPelanggaran(id);
             let nomorAbsen = getSiswaAbsenNumber(id);
+            
+            // Gunakan tanggal cetak dari form input, jika kosong baru fallback otomatis
+            let tglFormat = d.tglCetak || ( (currentTempat || "Indonesia") + ", 31 " + currentBulan + " 2026" );
 
             let fotoHtml = imageBase64Data ? `<img src="${imageBase64Data}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:1px solid #000;">` : '';
 
@@ -718,7 +758,7 @@
                     </table>
 
                     <h4 style="margin: 15px 0 6px 0; font-size: 10.5pt; text-transform: uppercase;">III. EVALUASI DAN DESKRIPSI UTAMA WALI KELAS</h4>
-                    <div style="border: 1.5px solid #000; padding: 14px; font-size: 10.5pt; border-radius: 4px; line-height: 1.6; background-color: #fafafa;">
+                    <div style="border: 1.5px solid #000; padding: 14px; font-size: 10.5pt; border-radius: 4px; line-height: 1.6; background-color: #fafafa; margin-bottom: 35px;">
                         <strong style="color: #b91c1c;">Catatan Kasus Pelanggaran Bulan Ini:</strong><br>
                         <span style="font-weight: 600; color: #b91c1c;">${pelanggaranOtomatis}</span>
                         <br><br>
@@ -728,6 +768,16 @@
                         <strong style="color: #b45309;">Rekomendasi / Hal yang Harus Ditingkatkan:</strong><br>
                         <span>${d.upgrade}</span>
                     </div>
+
+                    <table style="width:100%; font-size:11pt;">
+                        <tr>
+                            <td style="width:50%;"></td>
+                            <td style="text-align:center;">
+                                ${tglFormat}<br>Hormat Kami,<br>Wali Kelas<br><br><br><br><br>
+                                <strong><u>${currentWali || '(...................................)'}</u></strong>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             `;
 
@@ -757,6 +807,7 @@
                         <td style="border:1px solid #000; padding:6px; text-align:center;">${l.tanggal}</td>
                         <td style="border:1px solid #000; padding:6px; text-align:center;">${l.bulan}</td>
                         <td style="border:1px solid #000; padding:6px; text-align:center;">${l.tahun}</td>
+                        <td style="border:1px solid #000; padding:6px; text-align:center;">${l.tglKirim || '-'}</td>
                         <td style="border:1px solid #000; padding:6px; color:#b91c1c; font-weight:500;">${l.catatan}</td>
                     </tr>
                 `;
@@ -780,12 +831,13 @@
                     <table style="width:100%; border-collapse:collapse; font-size:9.5pt;">
                         <thead>
                             <tr style="background:#f2f2f2;">
-                                <th style="border:1px solid #000; padding:8px; width:10%;">No. Absen</th>
-                                <th style="border:1px solid #000; padding:8px; text-align:left; width:30%;">Nama Lengkap Siswa</th>
-                                <th style="border:1px solid #000; padding:8px; width:10%;">Hari</th>
-                                <th style="border:1px solid #000; padding:8px; width:8%;">Tanggal</th>
-                                <th style="border:1px solid #000; padding:8px; width:12%;">Bulan</th>
-                                <th style="border:1px solid #000; padding:8px; width:10%;">Tahun</th>
+                                <th style="border:1px solid #000; padding:8px; width:8%;">No. Absen</th>
+                                <th style="border:1px solid #000; padding:8px; text-align:left; width:26%;">Nama Lengkap Siswa</th>
+                                <th style="border:1px solid #000; padding:8px; width:8%;">Hari</th>
+                                <th style="border:1px solid #000; padding:8px; width:6%;">Tanggal</th>
+                                <th style="border:1px solid #000; padding:8px; width:10%;">Bulan</th>
+                                <th style="border:1px solid #000; padding:8px; width:8%;">Tahun</th>
+                                <th style="border:1px solid #000; padding:8px; width:14%;">Tgl Kirim Ortu</th>
                                 <th style="border:1px solid #000; padding:8px; text-align:left;">Catatan Kasus Pelanggaran Tatib</th>
                             </tr>
                         </thead>
@@ -800,19 +852,18 @@
             setTimeout(() => { w.print(); w.close(); }, 400);
         }
 
-        // OUTPUT 3: HILANGKAN GARIS KOLOM, BAGI KE TABEL KHUSUS SUPAYA TIDAK MELEBIHI TITIK DUA
+        // OUTPUT 3: SURAT NOTIFIKASI INDIVIDU HARIAN ORTU
         function printLaporanPelanggaranPerSiswa(logId) {
             let logPelanggaranKey = getSafeKey('log_pelanggaran_harian_' + currentBulan);
             let logPelanggaran = JSON.parse(localStorage.getItem(logPelanggaranKey)) || [];
             let targetLog = logPelanggaran.find(l => l.id === logId);
-            let tapel = localStorage.getItem('wk_v8_last_tapel') || "2026/2027";
 
             if(!targetLog) { alert('Data tidak ditemukan.'); return; }
 
             let nomorAbsen = getSiswaAbsenNumber(targetLog.siswaId);
             let fotoHtml = imageBase64Data ? `<img src="${imageBase64Data}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:1px solid #000;">` : '';
+            let tglFormat = formatTanggalSekarang();
 
-            // Layout Khusus: Menggunakan struktur tabel TANPA garis pembatas kolom (No Border)
             let templateSingle = `
                 <div style="font-family:Arial, sans-serif; padding:40px; max-width:680px; margin:auto; background:#fff; line-height:1.6;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom:3px solid #b91c1c; padding-bottom:10px; margin-bottom:30px;">
@@ -853,6 +904,11 @@
                             <td style="padding:8px 0; border-bottom:1px dashed #ddd; vertical-align:top;">${targetLog.hari}, ${targetLog.tanggal} ${targetLog.bulan} ${targetLog.tahun}</td>
                         </tr>
                         <tr>
+                            <td style="padding:8px 0; font-weight:bold; border-bottom:1px dashed #ddd; vertical-align:top;">Tanggal Dikirim ke Ortu</td>
+                            <td style="padding:8px 0; border-bottom:1px dashed #ddd; vertical-align:top;">:</td>
+                            <td style="padding:8px 0; border-bottom:1px dashed #ddd; vertical-align:top;">${targetLog.tglKirim || '-'}</td>
+                        </tr>
+                        <tr>
                             <td style="padding:12px 0; font-weight:bold; color:#b91c1c; vertical-align:top;">Uraian Tindak Pelanggaran</td>
                             <td style="padding:12px 0; color:#b91c1c; font-weight:bold; font-size:11.5pt; vertical-align:top;">:</td>
                             <td style="padding:12px 0; color:#b91c1c; font-weight:bold; font-size:11.5pt; vertical-align:top; text-align:justify;">${targetLog.catatan}</td>
@@ -866,7 +922,7 @@
                         <tr>
                             <td style="width:50%;"></td>
                             <td style="text-align:center;">
-                                Hormat Kami,<br>Wali Kelas Terkait<br><br><br><br><br>
+                                ${tglFormat}<br>Hormat Kami,<br>Wali Kelas<br><br><br><br><br>
                                 <strong><u>${currentWali || '(...................................)'}</u></strong>
                             </td>
                         </tr>
