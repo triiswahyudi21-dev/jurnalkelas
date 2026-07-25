@@ -1,0 +1,3 @@
+## 2026-07-25 - Enhancing File Upload and Icon Button Keyboard Navigation
+**Learning:** Completely hidden file inputs (`hidden` class) with visually overlaid labels are completely ignored by screen readers and cannot be navigated/triggered via keyboard tabs. Replacing them with Tailwind's `sr-only` class ensures screen reader visibility and keyboard accessibility, while focus state detection on wrapping containers (`focus-within:`) makes focus events visible to keyboard users.
+**Action:** Always replace `hidden` file inputs with `sr-only` and add `focus-within:` visual styles to their corresponding wrapping labels or containers.
