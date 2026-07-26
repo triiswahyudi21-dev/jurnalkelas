@@ -29,7 +29,7 @@
             }
         }
 
-        /* PERBAIKAN: ENGINE CETAK DEFAULT (NATIVE PRINT) BROWSER/HP A4 PAS DI TENGAH */
+        /* ENGINE CETAK DEFAULT (NATIVE PRINT) BROWSER/HP A4 PAS DI TENGAH */
         @media print {
             @page {
                 size: A4 portrait;
@@ -143,11 +143,20 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Kelas</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-school"></i></span>
-                        <input type="text" id="loginKelas" class="w-full pl-9 pr-3 py-2 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Masukkan nama kelas...">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Kelas</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-school"></i></span>
+                            <input type="text" id="loginKelas" class="w-full pl-9 pr-3 py-2 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Masukkan nama kelas...">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-amber-900 uppercase mb-1">Semester</label>
+                        <select id="loginSemester" class="w-full p-2 bg-amber-50 border-2 border-amber-200 font-bold text-amber-900 rounded-xl text-sm outline-none">
+                            <option value="Semester 1 (Ganjil)">Semester 1 (Ganjil)</option>
+                            <option value="Semester 2 (Genap)">Semester 2 (Genap)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -187,8 +196,9 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto border-t border-slate-800 sm:border-0 pt-2 sm:pt-0">
-                    <div class="text-[10px] sm:text-xs bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-700/50">
-                        <i class="far fa-calendar-alt text-amber-400 mr-1"></i> <span id="displayBulanNav" class="font-bold text-amber-300"></span> <span id="displayTapelNav"></span>
+                    <div class="text-[10px] sm:text-xs bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center gap-2">
+                        <span class="font-bold text-amber-400" id="displaySemesterNav"></span> |
+                        <span><i class="far fa-calendar-alt text-amber-400 mr-1"></i> <span id="displayBulanNav" class="font-bold text-amber-300"></span> <span id="displayTapelNav"></span></span>
                     </div>
                     <button onclick="keluarKeLogin()" class="px-2.5 py-1.5 bg-red-800/80 hover:bg-red-700 text-white font-bold text-[10px] sm:text-xs rounded-lg transition">
                         <i class="fas fa-sign-out-alt"></i> Keluar
@@ -221,6 +231,7 @@
                     <div><span class="w-20 inline-block font-bold">Wali Kelas</span>: <span id="metaInfoWali" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-20 inline-block font-bold">Tempat/Kota</span>: <span id="metaInfoTempat" class="text-slate-900 font-semibold"></span></div>
                     <div><span class="w-20 inline-block font-bold">Kelas Aktif</span>: <span id="metaInfoKelas" class="text-slate-900 font-semibold"></span></div>
+                    <div><span class="w-20 inline-block font-bold">Semester</span>: <span id="metaInfoSemester" class="text-amber-800 font-bold"></span></div>
                     <div><span class="w-20 inline-block font-bold">Bulan Laporan</span>: <span id="metaInfoBulan" class="text-indigo-700 font-extrabold uppercase"></span></div>
                 </div>
             </div>
@@ -342,6 +353,7 @@
                             <div><strong>Wali Kelas</strong>: <span id="lblWali">-</span></div>
                             <div><strong>Bulan Laporan</strong>: <span id="lblBulan">-</span></div>
                             <div><strong>Kelas</strong>: <span id="lblKelas">-</span></div>
+                            <div><strong>Semester</strong>: <span id="lblSemester">-</span></div>
                             <div><strong>Tahun Pelajaran</strong>: <span id="lblTapel">-</span></div>
                         </div>
                     </div>
@@ -401,6 +413,7 @@
         let currentKelas = "";
         let currentBulan = "Juli";
         let currentTempat = "";
+        let currentSemester = "Semester 1 (Ganjil)";
         let imageBase64Data = ""; 
 
         if(localStorage.getItem('wk_v8_foto')) {
@@ -416,11 +429,13 @@
         if(localStorage.getItem('wk_v8_last_tempat')) currentTempat = localStorage.getItem('wk_v8_last_tempat');
         if(localStorage.getItem('wk_v8_last_kelas')) currentKelas = localStorage.getItem('wk_v8_last_kelas');
         if(localStorage.getItem('wk_v8_last_bulan')) currentBulan = localStorage.getItem('wk_v8_last_bulan');
+        if(localStorage.getItem('wk_v8_last_semester')) currentSemester = localStorage.getItem('wk_v8_last_semester');
 
         document.getElementById('loginWali').value = currentWali;
         document.getElementById('loginTempat').value = currentTempat;
         document.getElementById('loginKelas').value = currentKelas;
         document.getElementById('loginBulan').value = currentBulan;
+        document.getElementById('loginSemester').value = currentSemester;
         if(localStorage.getItem('wk_v8_last_tapel')) document.getElementById('loginTapel').value = localStorage.getItem('wk_v8_last_tapel');
 
         function previewFotoUtama(input) {
@@ -445,19 +460,23 @@
             currentTempat = document.getElementById('loginTempat').value.trim();
             currentKelas = document.getElementById('loginKelas').value.trim();
             currentBulan = document.getElementById('loginBulan').value;
+            currentSemester = document.getElementById('loginSemester').value;
             let currentTapel = document.getElementById('loginTapel').value.trim();
 
             localStorage.setItem('wk_v8_last_wali', currentWali);
             localStorage.setItem('wk_v8_last_tempat', currentTempat);
             localStorage.setItem('wk_v8_last_kelas', currentKelas);
             localStorage.setItem('wk_v8_last_bulan', currentBulan);
+            localStorage.setItem('wk_v8_last_semester', currentSemester);
             localStorage.setItem('wk_v8_last_tapel', currentTapel);
 
+            document.getElementById('displaySemesterNav').innerText = currentSemester;
             document.getElementById('displayBulanNav').innerText = currentBulan;
             document.getElementById('displayTapelNav').innerText = "TP " + currentTapel;
             document.getElementById('metaInfoWali').innerText = currentWali || "-";
             document.getElementById('metaInfoTempat').innerText = currentTempat || "-";
             document.getElementById('metaInfoKelas').innerText = currentKelas || "-";
+            document.getElementById('metaInfoSemester').innerText = currentSemester;
             document.getElementById('metaInfoBulan').innerText = currentBulan;
 
             document.getElementById('loginScreen').classList.add('hidden');
@@ -722,6 +741,7 @@
             document.getElementById('lblWali').innerText = currentWali || "-";
             document.getElementById('lblKelas').innerText = currentKelas || "-";
             document.getElementById('lblBulan').innerText = currentBulan;
+            document.getElementById('lblSemester').innerText = currentSemester;
             document.getElementById('lblTapel').innerText = localStorage.getItem('wk_v8_last_tapel') || "2026/2027";
 
             document.body.classList.remove('printing-single');
@@ -768,14 +788,14 @@
                         <tr>
                             <td style="padding: 2px 0;">Nomor Absen</td>
                             <td style="padding: 2px 0;">: ${nomorAbsen}</td>
-                            <td style="padding: 2px 0;">Bulan Laporan</td>
-                            <td style="padding: 2px 0;">: ${currentBulan.toUpperCase()}</td>
+                            <td style="padding: 2px 0;">Semester</td>
+                            <td style="padding: 2px 0;">: ${currentSemester}</td>
                         </tr>
                         <tr>
                             <td style="padding: 2px 0;">Wali Kelas</td>
                             <td style="padding: 2px 0;">: ${currentWali}</td>
-                            <td style="padding: 2px 0;">Tahun Pelajaran</td>
-                            <td style="padding: 2px 0;">: ${tapel}</td>
+                            <td style="padding: 2px 0;">Bulan / TP</td>
+                            <td style="padding: 2px 0;">: ${currentBulan.toUpperCase()} / ${tapel}</td>
                         </tr>
                     </table>
 
@@ -878,7 +898,7 @@
                     <table style="width: 100%; font-size: 9.5pt; margin-bottom: 15px; border-collapse: collapse; line-height: 1.4; border: none;">
                         <tr><td style="width: 32%; padding: 4px 0; font-weight: bold; border: none;">Nama Siswa Lengkap</td><td style="width: 68%; padding: 4px 0; border: none;">: <strong>${targetLog.siswaName.toUpperCase()}</strong></td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Nomor Absen</td><td style="padding: 4px 0; border: none;">: ${nomorAbsen}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Kelas</td><td style="padding: 4px 0; border: none;">: ${currentKelas.toUpperCase()}</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Kelas / Semester</td><td style="padding: 4px 0; border: none;">: ${currentKelas.toUpperCase()} / ${currentSemester}</td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Wali Kelas</td><td style="padding: 4px 0; border: none;">: ${currentWali}</td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Waktu Kejadian</td><td style="padding: 4px 0; border: none;">: ${targetLog.hari}, ${targetLog.tanggal} ${targetLog.bulan} ${targetLog.tahun}</td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Dikirim ke Ortu</td><td style="padding: 4px 0; border: none;">: ${targetLog.tglKirim || '-'}</td></tr>
@@ -925,7 +945,7 @@
             let sheetRows = [
                 ["SMPN 3 BESUKI - JURNAL KELAS & LAPORAN PERKEMBANGAN SISWA BULANAN"],
                 ["Wali Kelas:", currentWali || '-', "Kelas:", currentKelas || '-'],
-                ["Bulan Laporan:", currentBulan, "Tahun Pelajaran:", localStorage.getItem('wk_v8_last_tapel') || "2026/2027"],
+                ["Semester:", currentSemester, "Bulan Laporan:", currentBulan, "Tahun Pelajaran:", localStorage.getItem('wk_v8_last_tapel') || "2026/2027"],
                 [],
                 ["No. Absen", "Nama Lengkap Murid", "Hadir(H)", "Alpha(A)", "Izin(I)", "Sakit(S)", "Akademik", "Kedisiplinan", "Keaktifan", "Sikap", "Log Pelanggaran Harian", "Deskripsi Karakter Utama", "Rekomendasi Peningkatan"]
             ];
