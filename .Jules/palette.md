@@ -1,0 +1,3 @@
+## 2026-07-27 - Keyboard Focus Highlights and Icon ARIA Labels in Single-Page Static Applications
+**Learning:** In highly visual/interactive single-page applications, critical actions (like photo upload) hidden behind hover interactions must be accessible to keyboard-only users by using accessible classes (`sr-only`) and visual focus ring triggers (`focus-within:`). Additionally, icon-only buttons need descriptive `aria-label` elements to be screen-reader friendly.
+**Action:** Replace `hidden` with `sr-only` on interactive file inputs, style focus container classes using `focus-within:`, and add `aria-label` attribute on icon-only control buttons.
