@@ -1,0 +1,3 @@
+## 2026-03-01 - Keyboard Access on File Inputs & Icon-only Buttons
+**Learning:** Purely hiding file input elements using `class="hidden"` completely removes them from the tab index and focus tree, making them inaccessible to keyboard users and screen readers. Additionally, interactive icons acting as buttons without descriptive labels provide zero context to non-sighted users.
+**Action:** Replace `hidden` with Tailwind's utility class `sr-only` to keep the input focusable, and use `focus-within:ring-2` on parent containers along with `group-focus-within:opacity-100` on labels to visually show active focus. Always augment icon-only buttons with standard `aria-label`, `title`, and explicit `focus-visible:ring-2` styles.
