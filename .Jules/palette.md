@@ -1,0 +1,3 @@
+## 2026-07-29 - File Input Accessibility & Keyboard Navigation
+**Learning:** Hiding file inputs using CSS display: none or Tailwind's hidden class completely removes them from the page's tab order. This breaks keyboard-only navigation and accessibility for custom styled upload triggers/buttons. Replacing hidden with Tailwind's sr-only retains the element in the focus hierarchy, enabling keyboard focus and screen reader interaction.
+**Action:** Always use sr-only for custom styled inputs instead of display: none/hidden, and style the parent overlay using focus-within: classes to ensure the upload state/indicator is visible to keyboard users.
