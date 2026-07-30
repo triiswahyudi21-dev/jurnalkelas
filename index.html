@@ -29,11 +29,21 @@
             }
         }
 
-        /* ENGINE CETAK DEFAULT (NATIVE PRINT) BROWSER/HP A4 PAS DI TENGAH */
+        /* ENGINE CETAK DEFAULT (NATIVE PRINT / SAVE PDF) */
         @media print {
+            /* Pengaturan Kertas Default Mode Landscape untuk Rekap & Jurnal */
             @page {
+                size: A4 landscape;
+                margin: 10mm;
+            }
+
+            /* Khusus Saat Cetak Surat/Laporan Individu (Single) Tetap Portrait */
+            body.printing-single {
+                page-break-inside: avoid;
+            }
+            body.printing-single @page {
                 size: A4 portrait;
-                margin: 15mm;
+                margin: 12mm;
             }
 
             .no-print, nav, #loginScreen, #formContainer, #sectionHarianFull, #bulkPanel {
@@ -44,7 +54,7 @@
                 background: white !important;
                 color: black !important;
                 font-family: Arial, Helvetica, sans-serif !important;
-                font-size: 10pt !important;
+                font-size: 9pt !important;
                 padding: 0 !important;
                 margin: 0 !important;
             }
@@ -62,18 +72,30 @@
                 display: block !important;
             }
 
+            /* GARIS TABEL DITEGASKAN AGAR TERLIHAT JELAS & TIDAK TERPOTONG */
             table.table-printable {
                 width: 100% !important;
                 border-collapse: collapse !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
+                table-layout: auto !important;
+                border: 1.5px solid #000 !important;
             }
 
-            table.table-printable th, table.table-printable td {
+            table.table-printable th, 
+            table.table-printable td {
                 border: 1px solid #000 !important;
-                padding: 6px !important;
+                padding: 5px 4px !important;
                 white-space: normal !important;
-                font-size: 9pt !important;
+                word-wrap: break-word !important;
+                font-size: 8.5pt !important;
+                color: #000 !important;
+            }
+
+            table.table-printable th {
+                background-color: #f0f0f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
 
             .badge {
@@ -342,16 +364,35 @@
 
             <!-- TABEL LAPORAN REKAP BULANAN -->
             <div class="bg-white p-3 sm:p-5 rounded-xl shadow-sm border border-slate-200 mb-6 print-container" id="sectionBulananFull">
-                <div id="printHeaderBulk" class="hidden print:block border-b-2 border-slate-900 pb-3 mb-4">
-                    <div>
-                        <div style="font-size: 12pt; font-weight: 900; text-transform: uppercase;">SMPN 3 BESUKI</div>
-                        <h2 style="font-size: 14pt; font-weight: bold; margin: 2px 0 0 0;">LAPORAN REKAP BULANAN DATA KELAS</h2>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; font-size: 10pt; margin-top: 10px;">
-                            <div><strong>Wali Kelas</strong>: <span id="lblWali">-</span></div>
-                            <div><strong>Bulan Laporan</strong>: <span id="lblBulan">-</span></div>
-                            <div><strong>Kelas</strong>: <span id="lblKelas">-</span></div>
-                            <div><strong>Semester</strong>: <span id="lblSemester">-</span></div>
-                            <div><strong>Tahun Pelajaran</strong>: <span id="lblTapel">-</span></div>
+                <!-- HEADER CETAK DISAJIKAN RAPI DENGAN SEJAJAR TITIK DUA -->
+                <div id="printHeaderBulk" class="hidden print:block border-b-2 border-slate-900 pb-2 mb-3">
+                    <div style="font-size: 11pt; font-weight: 900; text-transform: uppercase;">SMPN 3 BESUKI</div>
+                    <h2 style="font-size: 13pt; font-weight: bold; margin: 2px 0 6px 0;">LAPORAN REKAP BULANAN DATA KELAS</h2>
+                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; font-size: 8.5pt;">
+                        <div style="display: flex;">
+                            <span style="width: 100px; font-weight: bold;">Wali Kelas</span>
+                            <span style="margin-right: 6px;">:</span>
+                            <span id="lblWali">-</span>
+                        </div>
+                        <div style="display: flex;">
+                            <span style="width: 100px; font-weight: bold;">Bulan Laporan</span>
+                            <span style="margin-right: 6px;">:</span>
+                            <span id="lblBulan">-</span>
+                        </div>
+                        <div style="display: flex;">
+                            <span style="width: 100px; font-weight: bold;">Kelas</span>
+                            <span style="margin-right: 6px;">:</span>
+                            <span id="lblKelas">-</span>
+                        </div>
+                        <div style="display: flex;">
+                            <span style="width: 100px; font-weight: bold;">Semester</span>
+                            <span style="margin-right: 6px;">:</span>
+                            <span id="lblSemester">-</span>
+                        </div>
+                        <div style="display: flex; grid-column: span 2;">
+                            <span style="width: 100px; font-weight: bold;">Tahun Pelajaran</span>
+                            <span style="margin-right: 6px;">:</span>
+                            <span id="lblTapel">-</span>
                         </div>
                     </div>
                 </div>
@@ -410,22 +451,23 @@
                     <table class="w-full text-left border-collapse text-xs border border-slate-200 table-printable" id="tableUtama">
                         <thead>
                             <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 text-center font-bold">
-                                <th rowspan="2" class="p-2 border border-slate-300 w-10">Absen</th>
+                                <th rowspan="2" class="p-2 border border-slate-300 w-8">Absen</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 w-44 text-left">Nama Lengkap Siswa</th>
                                 <th colspan="4" class="p-1 border border-slate-300 bg-amber-50/40 text-amber-900">Absensi</th>
                                 <th colspan="4" class="p-1 border border-slate-300 bg-blue-50/40 text-blue-900">Rekap Aspek</th>
-                                <th rowspan="2" class="p-2 border border-slate-300 w-36 text-red-900 bg-red-50/30 min-w-[150px]">Kasus Pelanggaran</th>
+                                <th rowspan="2" class="p-2 border border-slate-300 w-40 text-red-900 bg-red-50/30">Kasus Pelanggaran</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 min-w-[150px]">Deskripsi Karakter</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 min-w-[150px]">Rekomendasi</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 w-28 no-print">Opsi</th>
                             </tr>
                             <tr class="bg-slate-50 text-slate-600 font-semibold text-center">
-                                <th class="p-1 border border-slate-300 text-emerald-700 w-7">H</th>
-                                <th class="p-1 border border-slate-300 text-red-600 w-7">A</th>
-                                <th class="p-1 border border-slate-300 text-amber-600 w-7">I</th>
-                                <th class="p-1 border border-slate-300 text-blue-600 w-7">S</th>
-                                <th class="p-1 border border-slate-300 w-12">Akad</th>
-                                <th class="p-1 border border-slate-300 w-12">Disip</th>
+                                <th class="p-1 border border-slate-300 text-emerald-700 w-6">H</th>
+                                <th class="p-1 border border-slate-300 text-red-600 w-6">A</th>
+                                <th class="p-1 border border-slate-300 text-amber-600 w-6">I</th>
+                                <th class="p-1 border border-slate-300 text-blue-600 w-6">S</th>
+                                <!-- HEADER AKADEMIK & DISIPLIN DITULIS UTUH -->
+                                <th class="p-1 border border-slate-300 w-16">Akademik</th>
+                                <th class="p-1 border border-slate-300 w-16">Disiplin</th>
                                 <th class="p-1 border border-slate-300 w-12">Aktif</th>
                                 <th class="p-1 border border-slate-300 w-12">Sikap</th>
                             </tr>
@@ -909,24 +951,31 @@
                         <div style="font-size: 8.5pt; color: #333; font-style: italic;">Evaluasi Jurnal Perkembangan & Karakter Murid</div>
                     </div>
 
+                    <!-- TABEL IDENTITAS SISWA DENGAN TITIK DUA SEJAJAR LEWAT KOLOM DEDIKASI -->
                     <table style="width: 100%; font-size: 9pt; margin-bottom: 12px; line-height: 1.35; border: none;">
                         <tr>
-                            <td style="width: 18%; padding: 2px 0;">Nama Siswa</td>
-                            <td style="width: 38%; padding: 2px 0;">: <strong>${siswa.name.toUpperCase()}</strong></td>
-                            <td style="width: 18%; padding: 2px 0;">Kelas</td>
-                            <td style="width: 26%; padding: 2px 0;">: ${currentKelas.toUpperCase()}</td>
+                            <td style="width: 16%; padding: 2px 0;">Nama Siswa</td>
+                            <td style="width: 2%; padding: 2px 0; text-align: center;">:</td>
+                            <td style="width: 37%; padding: 2px 0;"><strong>${siswa.name.toUpperCase()}</strong></td>
+                            <td style="width: 16%; padding: 2px 0;">Kelas</td>
+                            <td style="width: 2%; padding: 2px 0; text-align: center;">:</td>
+                            <td style="width: 27%; padding: 2px 0;">${currentKelas.toUpperCase()}</td>
                         </tr>
                         <tr>
                             <td style="padding: 2px 0;">Nomor Absen</td>
-                            <td style="padding: 2px 0;">: ${nomorAbsen}</td>
+                            <td style="padding: 2px 0; text-align: center;">:</td>
+                            <td style="padding: 2px 0;">${nomorAbsen}</td>
                             <td style="padding: 2px 0;">Semester</td>
-                            <td style="padding: 2px 0;">: ${currentSemester}</td>
+                            <td style="padding: 2px 0; text-align: center;">:</td>
+                            <td style="padding: 2px 0;">${currentSemester}</td>
                         </tr>
                         <tr>
                             <td style="padding: 2px 0;">Wali Kelas</td>
-                            <td style="padding: 2px 0;">: ${currentWali}</td>
+                            <td style="padding: 2px 0; text-align: center;">:</td>
+                            <td style="padding: 2px 0;">${currentWali}</td>
                             <td style="padding: 2px 0;">Bulan / TP</td>
-                            <td style="padding: 2px 0;">: ${currentBulan.toUpperCase()} / ${tapel}</td>
+                            <td style="padding: 2px 0; text-align: center;">:</td>
+                            <td style="padding: 2px 0;">${currentBulan.toUpperCase()} / ${tapel}</td>
                         </tr>
                     </table>
 
@@ -1026,16 +1075,42 @@
                         Dengan hormat, melalui pemberitahuan tertulis ini kami selaku Wali Kelas menginformasikan data kejadian penindakan terkait pelanggaran ketertiban yang dilakukan oleh putra/putri Anda pada hari ini di lingkungan sekolah.
                     </p>
 
+                    <!-- TABEL PELANGGARAN DENGAN TITIK DUA SEJAJAR LEWAT KOLOM DEDIKASI -->
                     <table style="width: 100%; font-size: 9.5pt; margin-bottom: 15px; border-collapse: collapse; line-height: 1.4; border: none;">
-                        <tr><td style="width: 32%; padding: 4px 0; font-weight: bold; border: none;">Nama Siswa Lengkap</td><td style="width: 68%; padding: 4px 0; border: none;">: <strong>${targetLog.siswaName.toUpperCase()}</strong></td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Nomor Absen</td><td style="padding: 4px 0; border: none;">: ${nomorAbsen}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Kelas / Semester</td><td style="padding: 4px 0; border: none;">: ${currentKelas.toUpperCase()} / ${currentSemester}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Wali Kelas</td><td style="padding: 4px 0; border: none;">: ${currentWali}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Waktu Kejadian</td><td style="padding: 4px 0; border: none;">: ${targetLog.hari}, ${targetLog.tanggal} ${targetLog.bulan} ${targetLog.tahun}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold; border: none;">Dikirim ke Ortu</td><td style="padding: 4px 0; border: none;">: ${targetLog.tglKirim || '-'}</td></tr>
+                        <tr>
+                            <td style="width: 30%; padding: 4px 0; font-weight: bold; border: none;">Nama Siswa Lengkap</td>
+                            <td style="width: 3%; padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="width: 67%; padding: 4px 0; border: none;"><strong>${targetLog.siswaName.toUpperCase()}</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 0; font-weight: bold; border: none;">Nomor Absen</td>
+                            <td style="padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="padding: 4px 0; border: none;">${nomorAbsen}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 0; font-weight: bold; border: none;">Kelas / Semester</td>
+                            <td style="padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="padding: 4px 0; border: none;">${currentKelas.toUpperCase()} / ${currentSemester}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 0; font-weight: bold; border: none;">Wali Kelas</td>
+                            <td style="padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="padding: 4px 0; border: none;">${currentWali}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 0; font-weight: bold; border: none;">Waktu Kejadian</td>
+                            <td style="padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="padding: 4px 0; border: none;">${targetLog.hari}, ${targetLog.tanggal} ${targetLog.bulan} ${targetLog.tahun}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 0; font-weight: bold; border: none;">Dikirim ke Ortu</td>
+                            <td style="padding: 4px 0; font-weight: bold; text-align: center; border: none;">:</td>
+                            <td style="padding: 4px 0; border: none;">${targetLog.tglKirim || '-'}</td>
+                        </tr>
                         <tr>
                             <td style="padding: 6px 0; font-weight: bold; color: #b91c1c; vertical-align: top; border: none;">Uraian Pelanggaran</td>
-                            <td style="padding: 6px; font-weight: bold; color: #b91c1c; background-color: #fef2f2; border: 1px dashed #f87171;">: ${targetLog.catatan}</td>
+                            <td style="padding: 6px 0; font-weight: bold; color: #b91c1c; text-align: center; vertical-align: top; border: none;">:</td>
+                            <td style="padding: 6px; font-weight: bold; color: #b91c1c; background-color: #fef2f2; border: 1px dashed #f87171;">${targetLog.catatan}</td>
                         </tr>
                     </table>
 
