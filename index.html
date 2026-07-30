@@ -33,11 +33,10 @@
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 15mm; /* Margin Pas 15mm Keliling */
+                margin: 15mm;
             }
 
-            /* Sembunyikan elemen UI yang tidak perlu saat dicetak */
-            .no-print, nav, #loginScreen, #formContainer, #sectionHarianFull {
+            .no-print, nav, #loginScreen, #formContainer, #sectionHarianFull, #bulkPanel {
                 display: none !important;
             }
 
@@ -54,7 +53,6 @@
                 display: block !important;
             }
 
-            /* Container Print yang Rata Tengah */
             .print-container {
                 box-shadow: none !important;
                 border: none !important;
@@ -87,7 +85,6 @@
             }
         }
 
-        /* Area Tempelan Cetak Single Individu / Surat Harian */
         #singlePrintContainer {
             display: none;
         }
@@ -236,7 +233,7 @@
                 </div>
             </div>
 
-            <!-- FORM EDIT INPUT DATA BULANAN -->
+            <!-- FORM EDIT INPUT DATA BULANAN (INDIVIDU) -->
             <div id="formContainer" class="bg-white p-4 sm:p-5 rounded-xl shadow-md mb-4 no-print border-2 border-indigo-500 hidden">
                 <h2 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider mb-3 pb-1.5 border-b flex justify-between items-center">
                     <span><i class="fas fa-pen-square mr-1"></i> Input Laporan Bulanan: <span id="formTargetName" class="text-slate-800 underline"></span></span>
@@ -359,6 +356,42 @@
                     </div>
                 </div>
 
+                <!-- PANEL PENGISIAN MASAL / BULK INPUT -->
+                <div id="bulkPanel" class="bg-indigo-50/70 p-3 sm:p-4 rounded-xl border border-indigo-200 mb-4 no-print">
+                    <h3 class="text-xs font-black text-indigo-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fas fa-layer-group text-indigo-600"></i> Pengisian Serentak / Masal Seluruh Siswa
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Jumlah Hadir (H)</label>
+                                <input type="number" id="bulkHadir" min="0" placeholder="misal: 20" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold text-emerald-700 outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="applyBulkHadir()" class="w-full mt-2 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] rounded-lg transition">
+                                <i class="fas fa-check-double mr-1"></i> Terapkan Kesemua
+                            </button>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Deskripsi Karakter</label>
+                                <input type="text" id="bulkDesc" placeholder="misal: Menunjukkan sikap santun dan aktif belajar." class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-medium text-slate-800 outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="applyBulkDesc()" class="w-full mt-2 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] rounded-lg transition">
+                                <i class="fas fa-check-double mr-1"></i> Terapkan Kesemua
+                            </button>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Rekomendasi/Peningkatan</label>
+                                <input type="text" id="bulkUpgrade" placeholder="misal: Pertahankan prestasi dan tingkatkan kedisiplinan." class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-medium text-slate-800 outline-none focus:border-indigo-500">
+                            </div>
+                            <button onclick="applyBulkUpgrade()" class="w-full mt-2 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] rounded-lg transition">
+                                <i class="fas fa-check-double mr-1"></i> Terapkan Kesemua
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2 no-print">
                     <div>
                         <h2 class="text-sm sm:text-base font-extrabold text-slate-800 uppercase tracking-wide">Jurnal Kelas (Rekap Bulanan)</h2>
@@ -384,7 +417,7 @@
                                 <th rowspan="2" class="p-2 border border-slate-300 w-36 text-red-900 bg-red-50/30 min-w-[150px]">Kasus Pelanggaran</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 min-w-[150px]">Deskripsi Karakter</th>
                                 <th rowspan="2" class="p-2 border border-slate-300 min-w-[150px]">Rekomendasi</th>
-                                <th rowspan="2" class="p-2 border border-slate-300 w-24 no-print">Opsi</th>
+                                <th rowspan="2" class="p-2 border border-slate-300 w-28 no-print">Opsi</th>
                             </tr>
                             <tr class="bg-slate-50 text-slate-600 font-semibold text-center">
                                 <th class="p-1 border border-slate-300 text-emerald-700 w-7">H</th>
@@ -496,6 +529,11 @@
             return `${prefix}_${safeWali}_${safeKelas}`;
         }
 
+        function escapeQuotes(str) {
+            if(!str) return '';
+            return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
         function generateKompilasiPelanggaran(siswaId) {
             let logPelanggaranKey = getSafeKey('log_pelanggaran_harian_' + currentBulan);
             let logPelanggaran = JSON.parse(localStorage.getItem(logPelanggaranKey)) || [];
@@ -542,6 +580,7 @@
                     };
 
                     let pelanggaranOtomatis = generateKompilasiPelanggaran(siswa.id);
+                    let safeName = escapeQuotes(siswa.name);
 
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-50 transition align-top";
@@ -560,11 +599,14 @@
                         <td class="p-2 border text-slate-600 text-[11px]">${d.desc || '-'}</td>
                         <td class="p-2 border text-slate-600 text-[11px]">${d.upgrade || '-'}</td>
                         <td class="p-2 border text-center no-print flex flex-col gap-1">
-                            <button type="button" onclick="openFormInput('${siswa.id}', '${siswa.name}')" class="w-full px-2 py-1 bg-blue-50 text-blue-700 font-bold rounded border border-blue-200 text-[11px]">
+                            <button type="button" onclick="openFormInput('${siswa.id}', '${safeName}')" class="w-full px-2 py-1 bg-blue-50 text-blue-700 font-bold rounded border border-blue-200 text-[11px]">
                                 <i class="fas fa-edit"></i> Catat
                             </button>
                             <button type="button" onclick="savePDFIndividuOrtuHP('${siswa.id}')" class="w-full px-2 py-1 bg-slate-100 text-slate-700 font-bold rounded border border-slate-300 text-[11px]">
                                 <i class="fas fa-print"></i> PDF Ortu
+                            </button>
+                            <button type="button" onclick="hapusSiswa('${siswa.id}', '${safeName}')" class="w-full px-2 py-1 bg-red-50 text-red-700 font-bold rounded border border-red-200 text-[11px] hover:bg-red-100">
+                                <i class="fas fa-trash-alt"></i> Hapus
                             </button>
                         </td>
                     `;
@@ -606,6 +648,77 @@
             }
         }
 
+        /* FUNGSI PENGISIAN MASAL / BULK */
+        function applyBulkHadir() {
+            let val = document.getElementById('bulkHadir').value;
+            if(val === "") { alert("Masukkan angka jumlah hadir."); return; }
+            let num = parseInt(val) || 0;
+
+            let masterKey = getSafeKey('master_siswa');
+            let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
+            let daftarSiswa = JSON.parse(localStorage.getItem(masterKey)) || [];
+            let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
+
+            if(daftarSiswa.length === 0) { alert("Belum ada siswa."); return; }
+
+            daftarSiswa.forEach(siswa => {
+                if(!catatanBulan[siswa.id]) {
+                    catatanBulan[siswa.id] = { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '', upgrade: '', tglCetak: '31' };
+                }
+                catatanBulan[siswa.id].h = num;
+            });
+
+            localStorage.setItem(bulkDataKey, JSON.stringify(catatanBulan));
+            loadAndRender();
+            alert(`Jumlah hadir (${num}) berhasil diterapkan ke semua siswa.`);
+        }
+
+        function applyBulkDesc() {
+            let text = document.getElementById('bulkDesc').value.trim();
+            if(!text) { alert("Masukkan kalimat deskripsi karakter."); return; }
+
+            let masterKey = getSafeKey('master_siswa');
+            let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
+            let daftarSiswa = JSON.parse(localStorage.getItem(masterKey)) || [];
+            let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
+
+            if(daftarSiswa.length === 0) { alert("Belum ada siswa."); return; }
+
+            daftarSiswa.forEach(siswa => {
+                if(!catatanBulan[siswa.id]) {
+                    catatanBulan[siswa.id] = { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '', upgrade: '', tglCetak: '31' };
+                }
+                catatanBulan[siswa.id].desc = text;
+            });
+
+            localStorage.setItem(bulkDataKey, JSON.stringify(catatanBulan));
+            loadAndRender();
+            alert("Deskripsi Karakter berhasil diterapkan ke seluruh siswa.");
+        }
+
+        function applyBulkUpgrade() {
+            let text = document.getElementById('bulkUpgrade').value.trim();
+            if(!text) { alert("Masukkan kalimat rekomendasi/peningkatan."); return; }
+
+            let masterKey = getSafeKey('master_siswa');
+            let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
+            let daftarSiswa = JSON.parse(localStorage.getItem(masterKey)) || [];
+            let catatanBulan = JSON.parse(localStorage.getItem(bulkDataKey)) || {};
+
+            if(daftarSiswa.length === 0) { alert("Belum ada siswa."); return; }
+
+            daftarSiswa.forEach(siswa => {
+                if(!catatanBulan[siswa.id]) {
+                    catatanBulan[siswa.id] = { h: 20, a: 0, i: 0, s: 0, akademik: 'Baik', disiplin: 'Baik', aktif: 'Baik', sikap: 'Baik', desc: '', upgrade: '', tglCetak: '31' };
+                }
+                catatanBulan[siswa.id].upgrade = text;
+            });
+
+            localStorage.setItem(bulkDataKey, JSON.stringify(catatanBulan));
+            loadAndRender();
+            alert("Rekomendasi Peningkatan berhasil diterapkan ke seluruh siswa.");
+        }
+
         function getBadgeHtml(predikat) {
             let cls = "bg-slate-100 text-slate-700";
             if (predikat === "Sangat Baik") cls = "bg-emerald-100 text-emerald-800 font-bold";
@@ -633,6 +746,18 @@
             localStorage.setItem(masterKey, JSON.stringify(currentMaster));
             document.getElementById('importArea').value = '';
             loadAndRender();
+        }
+
+        function hapusSiswa(id, name) {
+            if(confirm(`Yakin ingin menghapus siswa "${name}" dari jurnal kelas?`)) {
+                let masterKey = getSafeKey('master_siswa');
+                let daftarSiswa = JSON.parse(localStorage.getItem(masterKey)) || [];
+                
+                daftarSiswa = daftarSiswa.filter(s => s.id !== id);
+                localStorage.setItem(masterKey, JSON.stringify(daftarSiswa));
+
+                loadAndRender();
+            }
         }
 
         function hapusSemuaSiswa() {
@@ -684,9 +809,15 @@
             }
         }
 
-        function openFormInput(id, nama) {
+        function openFormInput(id, name) {
+            let masterKey = getSafeKey('master_siswa');
+            let daftarSiswa = JSON.parse(localStorage.getItem(masterKey)) || [];
+            let siswa = daftarSiswa.find(s => s.id === id);
+            
+            let namaSiswa = siswa ? siswa.name : (name || id);
+
             document.getElementById('formContainer').classList.remove('hidden');
-            document.getElementById('formTargetName').innerText = nama;
+            document.getElementById('formTargetName').innerText = namaSiswa;
             document.getElementById('formStudentId').value = id;
 
             let bulkDataKey = getSafeKey('catatan_bulan_' + currentBulan);
@@ -745,7 +876,7 @@
             document.getElementById('lblTapel').innerText = localStorage.getItem('wk_v8_last_tapel') || "2026/2027";
 
             document.body.classList.remove('printing-single');
-            window.print(); // Memanggil dialog cetak default browser/HP
+            window.print();
         }
 
         function savePDFLaporanHarianHP() {
@@ -809,7 +940,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td style="border:1px solid #000; text-align: center;">1</td><td style="border:1px solid #000;">Aspek Akademik / Pembelajaran Materi</td><td style="border:1px solid #000;"><strong>${d.akademik || 'Baik'}</strong></td></tr>
+                            <tr><td style="border:1px solid #000; text-align: center;">1</td><td style="border:1px solid #000;">Aspek Academic / Pembelajaran Materi</td><td style="border:1px solid #000;"><strong>${d.akademik || 'Baik'}</strong></td></tr>
                             <tr><td style="border:1px solid #000; text-align: center;">2</td><td style="border:1px solid #000;">Aspek Kedisiplinan & Kepatuhan Tata Tertib</td><td style="border:1px solid #000;"><strong>${d.disiplin || 'Baik'}</strong></td></tr>
                             <tr><td style="border:1px solid #000; text-align: center;">3</td><td style="border:1px solid #000;">Aspek Keaktifan / Partisipasi Belajar</td><td style="border:1px solid #000;"><strong>${d.aktif || 'Baik'}</strong></td></tr>
                             <tr><td style="border:1px solid #000; text-align: center;">4</td><td style="border:1px solid #000;">Aspek Perkembangan Sikap & Etika Sosial</td><td style="border:1px solid #000;"><strong>${d.sikap || 'Baik'}</strong></td></tr>
