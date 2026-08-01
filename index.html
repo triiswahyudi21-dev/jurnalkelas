@@ -130,12 +130,12 @@
             <p class="text-[10px] sm:text-xs text-slate-500 font-bold mt-2 uppercase tracking-widest">Sistem Manajemen Kelola Kelas</p>
             
             <div class="my-4 sm:my-6 flex flex-col items-center justify-center">
-                <div class="relative group w-28 h-28 sm:w-32 sm:h-32 bg-slate-200 rounded-full overflow-hidden border-4 border-amber-500 shadow-xl flex items-center justify-center">
+                <div class="relative group w-28 h-28 sm:w-32 sm:h-32 bg-slate-200 rounded-full overflow-hidden border-4 border-amber-500 shadow-xl flex items-center justify-center focus-within:ring-4 focus-within:ring-indigo-500 focus-within:ring-offset-2 transition-all duration-200">
                     <img id="loginAvatar" src="" class="w-full h-full object-cover hidden" alt="Foto Wali Kelas">
                     <i id="loginAvatarIcon" class="fas fa-user-tie text-4xl sm:text-5xl text-slate-400"></i>
-                    <label class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition text-[10px] font-bold text-white p-2">
+                    <label for="uploadFotoLogin" class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 group-focus-within:opacity-100 cursor-pointer transition text-[10px] font-bold text-white p-2">
                         <div class="text-center"><i class="fas fa-camera mb-1 block text-base"></i>UNGGAH FOTO PERMANEN</div>
-                        <input type="file" id="uploadFotoLogin" accept="image/*" class="hidden" onchange="previewFotoUtama(this)">
+                        <input type="file" id="uploadFotoLogin" accept="image/*" class="sr-only" onchange="previewFotoUtama(this)">
                     </label>
                 </div>
             </div>
@@ -143,14 +143,14 @@
             <div class="space-y-3 text-left">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nama Wali Kelas</label>
+                        <label for="loginWali" class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nama Wali Kelas</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-chalkboard-user"></i></span>
                             <input type="text" id="loginWali" class="w-full pl-9 pr-3 py-2 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Nama wali kelas...">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Tempat / Kota Sekolah</label>
+                        <label for="loginTempat" class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Tempat / Kota Sekolah</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-map-marker-alt"></i></span>
                             <input type="text" id="loginTempat" class="w-full pl-9 pr-3 py-2 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Contoh: Besuki">
@@ -159,14 +159,14 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Kelas</label>
+                        <label for="loginKelas" class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Kelas</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-school"></i></span>
                             <input type="text" id="loginKelas" class="w-full pl-9 pr-3 py-2 bg-slate-50 border-2 border-slate-200 rounded-xl focus:border-indigo-600 outline-none text-sm font-semibold text-slate-800" placeholder="Masukkan nama kelas...">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-amber-900 uppercase mb-1">Semester</label>
+                        <label for="loginSemester" class="block text-[11px] font-bold text-amber-900 uppercase mb-1">Semester</label>
                         <select id="loginSemester" class="w-full p-2 bg-amber-50 border-2 border-amber-200 font-bold text-amber-900 rounded-xl text-sm outline-none">
                             <option value="Semester 1 (Ganjil)">Semester 1 (Ganjil)</option>
                             <option value="Semester 2 (Genap)">Semester 2 (Genap)</option>
@@ -175,11 +175,11 @@
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Tahun Pelajaran</label>
+                        <label for="loginTapel" class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Tahun Pelajaran</label>
                         <input type="text" id="loginTapel" class="w-full p-2 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-semibold text-slate-800 text-center" value="2026/2027">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-indigo-900 uppercase mb-1">Bulan Operasional</label>
+                        <label for="loginBulan" class="block text-[11px] font-bold text-indigo-900 uppercase mb-1">Bulan Operasional</label>
                         <select id="loginBulan" class="w-full p-2 bg-indigo-50 border-2 border-indigo-200 font-bold text-indigo-900 rounded-xl text-sm outline-none">
                             <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
                             <option value="Oktober">Oktober</option><option value="November">November</option><option value="Desember">Desember</option>
@@ -226,9 +226,9 @@
             <div class="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200 mb-4 no-print flex flex-col lg:flex-row justify-between gap-4">
                 <div class="flex-1">
                     <div class="flex justify-between items-center mb-1">
-                        <h2 class="text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <label for="importArea" class="text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5 cursor-pointer">
                             <i class="fas fa-users-medical text-indigo-600"></i> Masukkan Daftar Siswa Baru (Satu Nama Per Baris)
-                        </h2>
+                        </label>
                         <button onclick="hapusSemuaSiswa()" class="text-[10px] px-2 py-0.5 bg-red-100 text-red-700 font-bold rounded hover:bg-red-200 transition">
                             <i class="fas fa-trash-alt mr-0.5"></i> Kosongkan Kelas
                         </button>
@@ -254,7 +254,7 @@
             <div id="formContainer" class="bg-white p-4 sm:p-5 rounded-xl shadow-md mb-4 no-print border-2 border-indigo-500 hidden">
                 <h2 class="text-xs sm:text-sm font-bold text-indigo-900 uppercase tracking-wider mb-3 pb-1.5 border-b flex justify-between items-center">
                     <span><i class="fas fa-pen-square mr-1"></i> Input Laporan Bulanan: <span id="formTargetName" class="text-slate-800 underline"></span></span>
-                    <button type="button" onclick="closeForm()" class="text-slate-400 hover:text-slate-600 text-lg p-1"><i class="fas fa-times"></i></button>
+                    <button type="button" onclick="closeForm()" class="text-slate-400 hover:text-slate-600 text-lg p-1" aria-label="Tutup formulir laporan bulanan"><i class="fas fa-times"></i></button>
                 </h2>
                 <form id="studentForm" class="space-y-3.5">
                     <input type="hidden" id="formStudentId">
@@ -262,15 +262,16 @@
                         <div class="bg-slate-50 p-3 rounded-lg border lg:col-span-2">
                             <h3 class="text-[11px] font-bold text-slate-600 uppercase mb-2">Jumlah Absensi Bulan Ini</h3>
                             <div class="grid grid-cols-4 gap-1.5">
-                                <div><label class="block text-[10px] text-center mb-0.5">Hadir</label><input type="number" id="inH" min="0" class="w-full p-2 border rounded text-center font-bold text-emerald-700 text-sm"></div>
-                                <div><label class="block text-[10px] text-center mb-0.5">Alpha</label><input type="number" id="inA" min="0" class="w-full p-2 border rounded text-center font-bold text-red-700 text-sm"></div>
-                                <div><label class="block text-[10px] text-center mb-0.5">Izin</label><input type="number" id="inI" min="0" class="w-full p-2 border rounded text-center font-bold text-amber-700 text-sm"></div>
-                                <div><label class="block text-[10px] text-center mb-0.5">Sakit</label><input type="number" id="inS" min="0" class="w-full p-2 border rounded text-center font-bold text-blue-700 text-sm"></div>
+                                <div><label for="inH" class="block text-[10px] text-center mb-0.5">Hadir</label><input type="number" id="inH" min="0" class="w-full p-2 border rounded text-center font-bold text-emerald-700 text-sm"></div>
+                                <div><label for="inA" class="block text-[10px] text-center mb-0.5">Alpha</label><input type="number" id="inA" min="0" class="w-full p-2 border rounded text-center font-bold text-red-700 text-sm"></div>
+                                <div><label for="inI" class="block text-[10px] text-center mb-0.5">Izin</label><input type="number" id="inI" min="0" class="w-full p-2 border rounded text-center font-bold text-amber-700 text-sm"></div>
+                                <div><label for="inS" class="block text-[10px] text-center mb-0.5">Sakit</label><input type="number" id="inS" min="0" class="w-full p-2 border rounded text-center font-bold text-blue-700 text-sm"></div>
                             </div>
                         </div>
                         <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-200">
                             <h3 class="text-[11px] font-bold text-amber-900 uppercase mb-1.5"><i class="far fa-calendar-alt"></i> Tanggal Ttd</h3>
                             <div>
+                                <label for="inTglCetakBulanan" class="sr-only">Tanggal Ttd Cetak Bulanan</label>
                                 <input type="text" id="inTglCetakBulanan" class="w-full p-2 border rounded text-xs font-bold text-slate-800 text-center" placeholder="Contoh: 31">
                             </div>
                         </div>
@@ -278,16 +279,16 @@
                     <div class="bg-slate-50 p-3 rounded-lg border">
                         <h3 class="text-[11px] font-bold text-slate-600 uppercase mb-2">Rekap Predikat Aspek</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <div><label class="block text-[10px] mb-0.5">Akademik</label><select id="inAkademik" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                            <div><label class="block text-[10px] mb-0.5">Disiplin</label><select id="inDisiplin" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                            <div><label class="block text-[10px] mb-0.5">Keaktifan</label><select id="inAktif" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
-                            <div><label class="block text-[10px] mb-0.5">Sikap</label><select id="inSikap" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label for="inAkademik" class="block text-[10px] mb-0.5">Akademik</label><select id="inAkademik" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label for="inDisiplin" class="block text-[10px] mb-0.5">Disiplin</label><select id="inDisiplin" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label for="inAktif" class="block text-[10px] mb-0.5">Keaktifan</label><select id="inAktif" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
+                            <div><label for="inSikap" class="block text-[10px] mb-0.5">Sikap</label><select id="inSikap" class="w-full p-1.5 border rounded text-xs bg-white font-medium"><option value="Sangat Baik">Sangat Baik</option><option value="Baik" selected>Baik</option><option value="Cukup">Cukup</option><option value="Kurang">Kurang</option></select></div>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div><label class="block text-[11px] font-bold text-red-700 mb-1">Catatan Pelanggaran Harian</label><input type="text" id="inPrestasi" class="w-full p-2 border rounded bg-slate-100 text-xs font-semibold text-red-700" readonly></div>
-                        <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Deskripsi Karakter Utama</label><textarea id="inDesc" class="w-full p-2 border text-xs rounded h-12 resize-none"></textarea></div>
-                        <div><label class="block text-[11px] font-bold text-slate-600 mb-1">Hal yang Perlu Ditingkatkan</label><textarea id="inUpgrade" class="w-full p-2 border text-xs rounded h-12 resize-none"></textarea></div>
+                        <div><label for="inPrestasi" class="block text-[11px] font-bold text-red-700 mb-1">Catatan Pelanggaran Harian</label><input type="text" id="inPrestasi" class="w-full p-2 border rounded bg-slate-100 text-xs font-semibold text-red-700" readonly></div>
+                        <div><label for="inDesc" class="block text-[11px] font-bold text-slate-600 mb-1">Deskripsi Karakter Utama</label><textarea id="inDesc" class="w-full p-2 border text-xs rounded h-12 resize-none"></textarea></div>
+                        <div><label for="inUpgrade" class="block text-[11px] font-bold text-slate-600 mb-1">Hal yang Perlu Ditingkatkan</label><textarea id="inUpgrade" class="w-full p-2 border text-xs rounded h-12 resize-none"></textarea></div>
                     </div>
                     <div class="flex justify-end gap-2 pt-1"><button type="button" onclick="closeForm()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg">Batal</button><button type="submit" class="px-5 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg shadow-sm">Simpan</button></div>
                 </form>
@@ -309,25 +310,25 @@
                 <div class="bg-red-50/40 p-3 sm:p-4 rounded-xl border border-red-100/70 mb-3 no-print">
                     <form id="formLogPelanggaran" class="grid grid-cols-1 sm:grid-cols-6 gap-2 items-end">
                         <div class="sm:col-span-2">
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Pilih Murid</label>
+                            <label for="logSiswaSelect" class="block text-[11px] font-bold text-slate-600 mb-1">Pilih Murid</label>
                             <select id="logSiswaSelect" class="w-full p-2 bg-white border text-xs rounded-lg outline-none font-medium text-slate-800" required></select>
                         </div>
                         <div class="grid grid-cols-3 sm:grid-cols-3 gap-2 sm:col-span-4 w-full">
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Hari</label>
+                                <label for="logHari" class="block text-[10px] font-bold text-slate-600 mb-0.5">Hari</label>
                                 <select id="logHari" class="w-full p-2 bg-white border text-xs rounded-lg"><option value="Senin">Senin</option><option value="Selasa">Selasa</option><option value="Rabu">Rabu</option><option value="Kamis">Kamis</option><option value="Jumat">Jumat</option><option value="Sabtu">Sabtu</option></select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Tgl (Angka)</label>
+                                <label for="logTanggal" class="block text-[10px] font-bold text-slate-600 mb-0.5">Tgl (Angka)</label>
                                 <input type="number" id="logTanggal" min="1" max="31" class="w-full p-2 bg-white border text-xs rounded-lg text-center font-bold" required value="1">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Kirim Ortu</label>
+                                <label for="logTglKirim" class="block text-[10px] font-bold text-slate-600 mb-0.5">Kirim Ortu</label>
                                 <input type="text" id="logTglKirim" class="w-full p-2 bg-white border text-xs rounded-lg text-center" placeholder="20/7/2026">
                             </div>
                         </div>
                         <div class="sm:col-span-6">
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Isi Kasus Catatan Pelanggaran Murid</label>
+                            <label for="logText" class="block text-[11px] font-bold text-slate-600 mb-1">Isi Kasus Catatan Pelanggaran Murid</label>
                             <input type="text" id="logText" class="w-full p-2 bg-white border text-xs rounded-lg" placeholder="Ketik deskripsi pelanggaran..." required>
                         </div>
                         <div class="sm:col-span-6 text-right">
@@ -400,7 +401,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Jumlah Hadir (H)</label>
+                                <label for="bulkHadir" class="block text-[11px] font-bold text-slate-700 mb-1">Set Jumlah Hadir (H)</label>
                                 <input type="number" id="bulkHadir" min="0" placeholder="misal: 20" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold text-emerald-700 outline-none focus:border-indigo-500">
                             </div>
                             <button onclick="applyBulkHadir()" class="w-full mt-2 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] rounded-lg transition">
@@ -409,7 +410,7 @@
                         </div>
                         <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Deskripsi Karakter</label>
+                                <label for="bulkDesc" class="block text-[11px] font-bold text-slate-700 mb-1">Set Deskripsi Karakter</label>
                                 <input type="text" id="bulkDesc" placeholder="misal: Menunjukkan sikap santun dan aktif belajar." class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-medium text-slate-800 outline-none focus:border-indigo-500">
                             </div>
                             <button onclick="applyBulkDesc()" class="w-full mt-2 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] rounded-lg transition">
@@ -418,7 +419,7 @@
                         </div>
                         <div class="bg-white p-2.5 rounded-lg border border-indigo-100 shadow-sm flex flex-col justify-between">
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">Set Rekomendasi/Peningkatan</label>
+                                <label for="bulkUpgrade" class="block text-[11px] font-bold text-slate-700 mb-1">Set Rekomendasi/Peningkatan</label>
                                 <input type="text" id="bulkUpgrade" placeholder="misal: Pertahankan prestasi dan tingkatkan kedisiplinan." class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-medium text-slate-800 outline-none focus:border-indigo-500">
                             </div>
                             <button onclick="applyBulkUpgrade()" class="w-full mt-2 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] rounded-lg transition">
@@ -674,7 +675,7 @@
                             <button type="button" onclick="savePDFSuratHarianHP('${log.id}')" class="px-2 py-1 bg-red-50 text-red-700 font-bold rounded border border-red-200 text-[10px] w-full">
                                 <i class="fas fa-print"></i> Surat
                             </button>
-                            <button type="button" onclick="hapusSingleLogPelanggaran('${log.id}')" class="text-slate-300 hover:text-red-600 p-1">
+                            <button type="button" onclick="hapusSingleLogPelanggaran('${log.id}')" class="text-slate-300 hover:text-red-600 p-1" aria-label="Hapus catatan pelanggaran siswa ini">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
