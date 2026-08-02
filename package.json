@@ -1,0 +1,25 @@
+{
+  "name": "sistem-sekolah-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "import-data": "node scripts/import-data.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "next": "13.5.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "csv-parse": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.16.18",
+    "@types/react": "18.2.21",
+    "eslint": "8.47.0",
+    "typescript": "5.5.6"
+  }
+}
